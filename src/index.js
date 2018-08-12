@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import reducer from './reducers';
 import './index.css';
-import App from './ omponents/App';
+import reducer from './reducers';
+import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducer);
