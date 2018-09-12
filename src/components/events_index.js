@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Link} from 'react-router-dom'
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 // アクションクリエイターのインポート
 import { readEvents } from '../actions'
 
@@ -13,34 +19,40 @@ class EventsIndex extends Component {
 
   renderEvents() {
     return _.map(this.props.events, event => (
-      <tr key={event.id}>
-        <td>{event.id}</td>
-        <td>
+      <TableRow key={event.id}>
+        <TableCell>{event.id}</TableCell>
+        <TableCell>
           <Link to={`/events/${event.id}`}>
             {event.title}
           </Link>
-        </td>
-        <td>{event.body}</td>
-      </tr>
+        </TableCell>
+        <TableCell>{event.body}</TableCell>
+      </TableRow>
     ))
   }
 
   render() {
     return (
       <React.Fragment>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Body</th>
-          </tr>
-        </thead>
+        <Button variant="fab" color="primary" aria-label="Add" component={Link} to="/events/new" style={{
+          position: 'absolute',
+          bottom: 10,
+          right: 10,
+        }}>
+          <AddIcon />
+        </Button>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Body</TableCell>
+          </TableRow>
+        </TableHead>
         <tbody>
           {this.renderEvents()}
         </tbody>
-      </table>
-      <Link to="/events/new">New Events</Link>
+      </Table>
       </React.Fragment>
     )
   }
