@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import { postEvent } from '../actions'
 
@@ -15,10 +16,14 @@ class EventsNew extends Component {
     const { input, label, type, meta: { touched, error } } = field;
 
     return (
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched && error && <span>{error}</span>}
-      </div>
+      <TextField
+        label={label}
+        placeholder={label}
+        type={type}
+        error={touched && error}
+        {...input}
+        fullWidth={true}
+      />
     )
   }
 
@@ -28,16 +33,19 @@ class EventsNew extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { handleSubmit, pristine, submitting, invalid } = this.props // handleSubmitはredux-form独自の関数？
+    const style = {margin: 12}
+
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div><Field label="Title" name="title" type="text" component={this.renderfield} /></div>
         <div><Field label="Body" name="body" type="text" component={this.renderfield} /></div>
-        <div>
-          <input type="submit" value="submit" disabled={pristine || submitting || invalid} />
-          <Link to="/">Cancel</Link>
-        </div>
+        <Button variant="raised" color="primary" style={style} type="submit" disabled={pristine || submitting || invalid}>
+          Submit
+        </Button>
+        <Button variant="raised" color="secondary" style={style} href="/">
+          Cancel
+        </Button>
       </form>
     )
   }
